@@ -1,14 +1,24 @@
-class Character:
-    def __init__(self, name, health, weapon, agility, strength, s_ability):
+import random
+
+class character:
+    def __init__(self, name, hp, attack,  weapon, agility, strength, s_ability):
         self.name = name
-        self.health = health
+        self.hp = hp
+        self.attack = attack
         self.weapon = weapon
         self.agility = agility
         self.strength = strength
         self.s_ability = s_ability
-
-    def attack(self, enemy):
-        damage = self.weapon.damage
-        enemy.health -= damage
-        print(f"You dealt {damage} damage to {enemy}")
         
+    def is_alive(self):
+        return self.hp > 0
+    
+    def take_damage(self, damage):
+        self.hp -= damage
+        if self.hp < 0:
+            self.hp = 0
+
+    def attack_enemy(self, enemy):
+        damage = random.randint(1, self.attack)
+        enemy.take_damage(damage)
+        print(f"{self.name} attacked {enemy.name} for {damage} damage!")

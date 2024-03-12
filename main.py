@@ -4,7 +4,7 @@ import os
 from room import Room
 from enemy import Enemy
 from weapon import Weapon
-from character import Character
+from character import character
 from chest import Chest
 #---------------------weapons---------------------------#
 
@@ -20,12 +20,12 @@ bible = Weapon("Holy Bible", 10, 10)
 
 #-------------------characters--------------------------#
 
-edo = Character("Edo", 100, fists, 5, 5, "Kleptomania")
-emil = Character("Emil", 110, baguette, 6, 6, "Flour explosion")
-ibi = Character("Ibi", 110, cigareter, 4, 5, "Røyk")
-thea = Character("Thea", 110, vape, 5, 7, "Insults")
-ody = Character("Ody", 120, protein_f, 6, 8, "STG buff")
-leah = Character("Leah", 100, nail, 5, 5, "MF ult")
+edo = character("Edo", 100, 10, fists, 5, 5, "Kleptomania")
+emil = character("Emil", 110, 10, baguette, 6, 6, "Flour explosion")
+ibi = character("Ibi", 110, 10, cigareter, 4, 5, "Røyk")
+thea = character("Thea", 110, 10, vape, 5, 7, "Insults")
+ody = character("Ody", 120, 10, protein_f, 6, 8, "STG buff")
+leah = character("Leah", 100, 10, nail, 5, 5, "MF ult")
 
 character_choice = [edo, emil, ibi, thea, ody, leah]
 
@@ -42,9 +42,9 @@ def choose_character(character_choice):
 
 #---------------------enemies---------------------------#
 
-meggie = Enemy("Meggie", 30, "AUAUAUAUAUAUAUAUAUAU", teeth)
-mor = Enemy("Mor", 100, "Go buy rice now!", slipper)
-bestemor = Enemy("Bestemor", 200, "I want to sleep, stop playing!", bible)
+meggie = Enemy("Meggie", 5, 30, "AUAUAUAUAUAUAUAUAUAU", teeth)
+mor = Enemy("Mor", 10, 100, "Go buy rice now!", slipper)
+bestemor = Enemy("Bestemor", 20, 200, "I want to sleep, stop playing!", bible)
 
 #---------------------rooms-----------------------------#
 
@@ -73,8 +73,6 @@ lootbox = Chest([nail, protein_f, slipper, bible, vape, cigareter, baguette,])
 os.system("cls")
 character = choose_character(character_choice)
 
-
-
 #---------------------start game------------------------#
 
 def start_game(character):
@@ -83,12 +81,36 @@ def start_game(character):
     
 start_game(character)
 
+#--------------------battle system----------------------#
+
+def Start_battle(character, Enemy):
+    print("Battle Start!")
+
+    while character.is_alive() and Enemy.is_alive():
+        input("Press ENTER to attack")
+        character.attack_enemy(Enemy)
+        if not Enemy.is_alive():
+            print(f"you've defeated {Enemy.name}!")
+            break
+        input("Press ENTER to resume")
+        Enemy.attack_enemy(character)
+        if not character.is_alive():
+            print("You have been defeated!")
+            break
+    
+    print("Battle End!")
+
 #--------------------game loop--------------------------#
 
 while True:
     os.system("cls")
     current_room.room_name()
     current_room.describe_room()
-    current_room.room_monster_display()
+    Enemy = current_room.room_monster_display()
+    if Enemy:
+         Start_battle(character, Enemy)
     neste_rom = current_room.room_menu()
     current_room = current_room.connecting_rooms[int(neste_rom)]
+
+
+   

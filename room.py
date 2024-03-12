@@ -17,6 +17,7 @@ class Room:
             print("It is quiet here...")
         else:
             print(f"OH NO! {self.enemy.name} is aproaching!")
+            return self.enemy
 
 
     def room_menu(self):
