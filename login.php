@@ -1,5 +1,6 @@
 <?php
-// Start session to persist user login status
+include "db_config.php"
+
 session_start();
 
 // Include database connection file

@@ -35,9 +35,14 @@ def choose_character(character_choice):
         for i in range(len(character_choice)):
             print(f"{i + 1}) {character_choice[i].name}.")
 
-        choosen_character = int(input("Choose a character from the menu: "))
-        i = choosen_character - 1
+        choosen_character = input("Choose a character from the menu: ")
+        while len(choosen_character) < 1 or int(choosen_character) > len(character_choice):
+            choosen_character = input("Invalid input! Choose again")
+        i = int(choosen_character) - 1
         return character_choice[i]
+            
+             
+             
      
 
 #---------------------enemies---------------------------#
@@ -84,33 +89,45 @@ start_game(character)
 #--------------------battle system----------------------#
 
 def Start_battle(character, Enemy):
+    score = 0
     print("Battle Start!")
 
     while character.is_alive() and Enemy.is_alive():
         input("Press ENTER to attack")
         character.attack_enemy(Enemy)
+        Enemy.health_bar()
         if not Enemy.is_alive():
             print(f"you've defeated {Enemy.name}!")
+            score = 10
             break
         input("Press ENTER to resume")
         Enemy.attack_enemy(character)
+        character.health_bar()
         if not character.is_alive():
             print("You have been defeated!")
+            score = -10
             break
     
     print("Battle End!")
+    return score
 
 #--------------------game loop--------------------------#
 
+score = 0
 while True:
     os.system("cls")
     current_room.room_name()
     current_room.describe_room()
     Enemy = current_room.room_monster_display()
     if Enemy:
-         Start_battle(character, Enemy)
+        result = Start_battle(character, Enemy)
+        score += result
+        print(f"Score {score}")
+        if not character.is_alive():
+            print("GAME OVER")
+            break
     neste_rom = current_room.room_menu()
     current_room = current_room.connecting_rooms[int(neste_rom)]
-
+    
 
    

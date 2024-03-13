@@ -6,7 +6,7 @@ $dbPassword = "Admin";
 $dbName = "login_system";
 
 // Create database connection
-$conn = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+$conn = mysqli_connect($dbHost, $dbUsername, $dbPassword, $dbName);
 
 // Check connection
 if ($conn->connect_error) {

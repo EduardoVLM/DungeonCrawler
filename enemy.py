@@ -21,4 +21,5 @@ class Enemy:
         enemy.take_damage(damage)
         print(f"{self.name} attacked {enemy.name} for {damage} damage!")
 
-    
+    def health_bar(self):
+        print(f"{self.name} has {self.hp} HP left")

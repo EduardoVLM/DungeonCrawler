@@ -26,5 +26,7 @@ class Room:
         for i in range(len(self.connecting_rooms)):
             print(f"{i+1}) go inside {self.connecting_rooms[i].name}.")
         
-        choice = int(input("Choose from the menu: "))
-        return choice - 1
+        choice = input("Choose from the menu: ")
+        while len(choice) < 1 or int(choice) > len(self.connecting_rooms):
+            choice = input("Invalid choice! choose again")
+        return int(choice) - 1
