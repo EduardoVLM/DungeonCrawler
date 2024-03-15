@@ -6,6 +6,7 @@ from enemy import Enemy
 from weapon import Weapon
 from character import character
 from chest import Chest
+
 #---------------------weapons---------------------------#
 
 fists = Weapon("Fist", 2, 1)
@@ -17,15 +18,16 @@ baguette = Weapon("Baguette", 3, 1)
 teeth = Weapon("Teeth", 2, 1)
 slipper = Weapon("Slipper", 7, 5)
 bible = Weapon("Holy Bible", 10, 10)
+rage = Weapon("Rage", 10, 1)
 
 #-------------------characters--------------------------#
 
-edo = character("Edo", 100, 10, fists, 5, 5, "Kleptomania")
+edo = character("Edo", 100, 100, fists, 5, 5, "Kleptomania")
 emil = character("Emil", 110, 10, baguette, 6, 6, "Flour explosion")
 ibi = character("Ibi", 110, 10, cigareter, 4, 5, "Røyk")
 thea = character("Thea", 110, 10, vape, 5, 7, "Insults")
 ody = character("Ody", 120, 10, protein_f, 6, 8, "STG buff")
-leah = character("Leah", 100, 10, nail, 5, 5, "MF ult")
+leah = character("Leah", 100, 50, nail, 5, 5, "MF ult")
 
 character_choice = [edo, emil, ibi, thea, ody, leah]
 
@@ -40,16 +42,14 @@ def choose_character(character_choice):
             choosen_character = input("Invalid input! Choose again")
         i = int(choosen_character) - 1
         return character_choice[i]
-            
-             
-             
-     
 
 #---------------------enemies---------------------------#
 
-meggie = Enemy("Meggie", 5, 30, "AUAUAUAUAUAUAUAUAUAU", teeth)
-mor = Enemy("Mor", 10, 100, "Go buy rice now!", slipper)
-bestemor = Enemy("Bestemor", 20, 200, "I want to sleep, stop playing!", bible)
+meggie = Enemy("Meggie", 5, 30, "<<AUAUAUAUAUAUAUAUAUAU>>", teeth)
+mor = Enemy("Mor", 10, 100, "<<Go buy rice now!>>", slipper)
+bestemor = Enemy("Bestemor", 20, 200, "<<I want to sleep, stop playing!>>", bible)
+stefan = Enemy("Stefan", 15, 150, "<<Go take care of Matheus!>>", cigareter)
+matheus = Enemy("Matheus", 35, 75, "<<EU NAO QUERO!!>>", rage)
 
 #---------------------rooms-----------------------------#
 
@@ -59,14 +59,18 @@ edo_room = Room("Edo room", None, 1, "It stinks here")
 hall = Room("Hall", meggie , 1, "Meggie's realm")
 kitchen = Room("Kitchen", mor, 1, "smells good")
 stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching")
+varanda = Room("Varanda", stefan, None, "It stinks cigaretes.")
+mamma_rom = Room("Mor's room", matheus, None, "This was once a place of peace, but that was before HE arrived" )
 hell = Room("Hell", None, 1, "Welcome to the abyss of eternal torment!")
 
 #------------------connecting rooms---------------------#
 
 edo_room.connecting_rooms = [hall]
-hall.connecting_rooms = [stue, kitchen, edo_room]
+hall.connecting_rooms = [stue, kitchen, edo_room, mamma_rom]
 kitchen.connecting_rooms = [hall]
-stue.connecting_rooms = [hall]
+mamma_rom.connecting_rooms = [hall]
+stue.connecting_rooms = [hall, varanda]
+varanda.connecting_rooms = [stue]
 current_room = edo_room
 
 #--------------------chests-----------------------------#
@@ -120,6 +124,7 @@ while True:
     current_room.describe_room()
     Enemy = current_room.room_monster_display()
     if Enemy:
+        Enemy.catch_phrase()
         result = Start_battle(character, Enemy)
         score += result
         print(f"Score {score}")

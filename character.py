@@ -21,7 +21,7 @@ class character:
     def attack_enemy(self, enemy):
         damage = random.randint(1, self.attack)
         enemy.take_damage(damage)
-        print(f"{self.name} attacked {enemy.name} for {damage} damage!")
+        print(f"{self.name} attacked {enemy.name} with {self.weapon.name} for {damage} damage!")
 
     def health_bar(self):
         print(f"{self.name} has {self.hp} HP left")
