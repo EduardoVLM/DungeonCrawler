@@ -18,6 +18,13 @@ class Room:
         else:
             print(f"OH NO! {self.enemy.name} is aproaching!")
             return self.enemy
+        
+    def room_chest_display(self):
+        if self.chest == None:
+            print("There is no chest here...")
+        else:
+            print("There is a chest in the room")
+            return self.chest
 
 
     def room_menu(self):

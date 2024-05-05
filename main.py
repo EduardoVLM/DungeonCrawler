@@ -22,7 +22,7 @@ rage = Weapon("Rage", 10, 1)
 
 #-------------------characters--------------------------#
 
-edo = character("Edo", 100, 100, fists, 5, 5, "Kleptomania")
+edo = character("Edo", 100, 1000, fists, 5, 5, "Kleptomania")
 emil = character("Emil", 110, 10, baguette, 6, 6, "Flour explosion")
 ibi = character("Ibi", 110, 10, cigareter, 4, 5, "Røyk")
 thea = character("Thea", 110, 10, vape, 5, 7, "Insults")
@@ -51,11 +51,15 @@ bestemor = Enemy("Bestemor", 20, 200, "<<I want to sleep, stop playing!>>", bibl
 stefan = Enemy("Stefan", 15, 150, "<<Go take care of Matheus!>>", cigareter)
 matheus = Enemy("Matheus", 35, 75, "<<EU NAO QUERO!!>>", rage)
 
+#--------------------chests-----------------------------#
+
+edo_room_chest = Chest()
+
 #---------------------rooms-----------------------------#
 
 current_room = None
 
-edo_room = Room("Edo room", None, 1, "It stinks here")
+edo_room = Room("Edo room", None, edo_room_chest, "It stinks here")
 hall = Room("Hall", meggie , 1, "Meggie's realm")
 kitchen = Room("Kitchen", mor, 1, "smells good")
 stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching")
@@ -72,10 +76,6 @@ mamma_rom.connecting_rooms = [hall]
 stue.connecting_rooms = [hall, varanda]
 varanda.connecting_rooms = [stue]
 current_room = edo_room
-
-#--------------------chests-----------------------------#
-
-lootbox = Chest([nail, protein_f, slipper, bible, vape, cigareter, baguette,])
 
 #-------------character choice menu---------------------#
 
@@ -116,6 +116,8 @@ def Start_battle(character, Enemy):
     return score
 
 #--------------------game loop--------------------------#
+total_enemies = 5 
+enemies_killed = 0
 
 score = 0
 while True:
@@ -128,9 +130,18 @@ while True:
         result = Start_battle(character, Enemy)
         score += result
         print(f"Score {score}")
+        if result > 0:
+            enemies_killed += 1
         if not character.is_alive():
             print("GAME OVER")
             break
+        if enemies_killed == total_enemies:
+            print("VICTORY! You have earned your peace!")
+            break
+    Chest = current_room.room_chest_display()
+    if Chest:
+        Chest.open()
+
     neste_rom = current_room.room_menu()
     current_room = current_room.connecting_rooms[int(neste_rom)]
     
