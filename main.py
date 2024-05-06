@@ -9,12 +9,13 @@ from chest import Chest
 
 #---------------------weapons---------------------------#
 
-fists = Weapon("Fist", 2, 1)
-protein_f = Weapon("Protein flask", 2, 2)
-nail = Weapon("Nails", 1, 3)
-vape = Weapon("Vape", 1.5, 2)
-cigareter = Weapon("Cigg", 2, 2)
-baguette = Weapon("Baguette", 3, 1)
+fists = Weapon("Fist", 10, 1)
+protein_f = Weapon("Protein flask", 10, 2)
+nail = Weapon("Nails", 12, 3)
+vape = Weapon("Vape", 15, 2)
+cigareter = Weapon("Cigg", 10, 2)
+baguette = Weapon("Baguette", 15, 1)
+art = Weapon("AT kanon", 20, 10)
 teeth = Weapon("Teeth", 2, 1)
 slipper = Weapon("Slipper", 7, 5)
 bible = Weapon("Holy Bible", 10, 10)
@@ -22,14 +23,15 @@ rage = Weapon("Rage", 10, 1)
 
 #-------------------characters--------------------------#
 
-edo = character("Edo", 100, 1000, fists, 5, 5, "Kleptomania")
+edo = character("Edo", 100, 10, fists, 5, 5, "Kleptomania")
 emil = character("Emil", 110, 10, baguette, 6, 6, "Flour explosion")
 ibi = character("Ibi", 110, 10, cigareter, 4, 5, "Røyk")
 thea = character("Thea", 110, 10, vape, 5, 7, "Insults")
 ody = character("Ody", 120, 10, protein_f, 6, 8, "STG buff")
 leah = character("Leah", 100, 50, nail, 5, 5, "MF ult")
+ferdinand = character("Ferdi", 110, 11, art, 6, 7, "Sprenge shit")
 
-character_choice = [edo, emil, ibi, thea, ody, leah]
+character_choice = [edo, emil, ibi, thea, ody, leah, ferdinand]
 
 def choose_character(character_choice):
         print(f"Choose your character:")
@@ -54,18 +56,21 @@ matheus = Enemy("Matheus", 35, 75, "<<EU NAO QUERO!!>>", rage)
 #--------------------chests-----------------------------#
 
 edo_room_chest = Chest()
+hall_chest = Chest()
+kitchen_chest = Chest()
+hell_chest = Chest()
 
 #---------------------rooms-----------------------------#
 
 current_room = None
 
 edo_room = Room("Edo room", None, edo_room_chest, "It stinks here")
-hall = Room("Hall", meggie , 1, "Meggie's realm")
-kitchen = Room("Kitchen", mor, 1, "smells good")
+hall = Room("Hall", meggie , hall_chest, "Meggie's realm")
+kitchen = Room("Kitchen", mor, kitchen_chest, "smells good")
 stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching")
 varanda = Room("Varanda", stefan, None, "It stinks cigaretes.")
 mamma_rom = Room("Mor's room", matheus, None, "This was once a place of peace, but that was before HE arrived" )
-hell = Room("Hell", None, 1, "Welcome to the abyss of eternal torment!")
+hell = Room("Hell", None, hell_chest, "Welcome to the abyss of eternal torment!")
 
 #------------------connecting rooms---------------------#
 
@@ -134,13 +139,18 @@ while True:
             enemies_killed += 1
         if not character.is_alive():
             print("GAME OVER")
-            break
+            break 
         if enemies_killed == total_enemies:
             print("VICTORY! You have earned your peace!")
             break
     Chest = current_room.room_chest_display()
     if Chest:
+        input("Press ENTER to open the chest")
         Chest.open()
+        if Chest.items == ["Health potion"]:
+            character.hp += 20
+            print(f"You've found a health potion and restored 20 health!")
+
 
     neste_rom = current_room.room_menu()
     current_room = current_room.connecting_rooms[int(neste_rom)]

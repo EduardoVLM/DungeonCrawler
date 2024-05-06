@@ -19,7 +19,7 @@ class character:
             self.hp = 0
 
     def attack_enemy(self, enemy):
-        damage = random.randint(1, self.attack)
+        damage = random.randint(1, self.attack) + self.weapon.damage
         enemy.take_damage(damage)
         print(f"{self.name} attacked {enemy.name} with {self.weapon.name} for {damage} damage!")
 
