@@ -1,29 +1,18 @@
 import random
 
 class Chest:
-    def __init__(self, items):
-        self.items = items
+    def __init__(self, open_chest):
+        self.is_open = False
+        self.open_chest = open_chest
+        self.items = ["Health potion"]
 
-    def open(self):
-        item = random.choice(self.items)
-        return item
-    
-items_pool = ["Nail", "Protein Flask", "Baguette", "Vape", "Ciggs", "Slipper", "Bible"]
-lootbox = Chest(items_pool)
+        def open(self):
+            if not self.is_open:
+                print("You opened the chest!")
+                self.is_open = True
+                self.open_chest()
+            else:
+                print("The chest is already open!")
 
-for _ in range(7):
-    item = lootbox.open()
-    print("You received", item)
-
-   # def open_loot_box():
-   # loot_table = {
-   #     "Protein Flask": 12.2%,
-    #    "Nail": 12.2%,
-    #    "vape": 12.2%,
-    #    "cigareter": 6.5%,
-      #  "baguette": 6.5%,
-   #     "slipper": 2.5%,
-   #     "Holy Bible": 0.5%
-
-   # }
-
+def open_chest(self):
+    print (f"You found a {self.items}!")
