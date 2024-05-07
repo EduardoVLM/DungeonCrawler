@@ -1,10 +1,10 @@
 import random
 
-class HealthPotion:
-    def __init__(self, health_amount):
-        self.healt_amount = health_amount
+class Potion:
+    def __init__(self, name, health_amount):
+        self.name = name
+        self.health_amount = health_amount
 
-    def use_health_potion(player):
-        health_amount = random.randint(20, 40)
-        player.health += health_amount
-        print(f"You've found a health potion and restored {health_amount} health!")
+    def use_health_potion(self, character):
+        character.hp += self.health_amount
+        

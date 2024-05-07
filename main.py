@@ -5,6 +5,7 @@ from room import Room
 from enemy import Enemy
 from weapon import Weapon
 from character import character
+from potion import Potion
 from chest import Chest
 
 #---------------------weapons---------------------------#
@@ -20,6 +21,19 @@ teeth = Weapon("Teeth", 2, 1)
 slipper = Weapon("Slipper", 7, 5)
 bible = Weapon("Holy Bible", 10, 10)
 rage = Weapon("Rage", 10, 1)
+
+#-------------------potions-----------------------------#
+
+Health_potion = Potion("Health potion", 20)
+Hp_potion = Potion("Hp potion", 30)
+Healing_juice = Potion("Healing juice", 40)
+
+#--------------------chests-----------------------------#
+
+edo_room_chest = Chest([Health_potion, Hp_potion, Healing_juice])
+hall_chest = Chest([Health_potion, Hp_potion, Healing_juice])
+kitchen_chest = Chest([Health_potion, Hp_potion, Healing_juice])
+hell_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 
 #-------------------characters--------------------------#
 
@@ -53,12 +67,6 @@ bestemor = Enemy("Bestemor", 20, 200, "<<I want to sleep, stop playing!>>", bibl
 stefan = Enemy("Stefan", 15, 150, "<<Go take care of Matheus!>>", cigareter)
 matheus = Enemy("Matheus", 35, 75, "<<EU NAO QUERO!!>>", rage)
 
-#--------------------chests-----------------------------#
-
-edo_room_chest = Chest()
-hall_chest = Chest()
-kitchen_chest = Chest()
-hell_chest = Chest()
 
 #---------------------rooms-----------------------------#
 
@@ -143,13 +151,18 @@ while True:
         if enemies_killed == total_enemies:
             print("VICTORY! You have earned your peace!")
             break
-    Chest = current_room.room_chest_display()
-    if Chest:
-        input("Press ENTER to open the chest")
-        Chest.open()
-        if Chest.items == ["Health potion"]:
-            character.hp += 20
-            print(f"You've found a health potion and restored 20 health!")
+
+    if current_room.chest:
+        input("Press ENTER to open chest")
+        found_potion = current_room.chest.open()
+
+        if found_potion is not None:
+            found_potion.use_health_potion(character)
+            print(f"You found a {found_potion.name}, you have now {character.hp} HP")
+        else:
+            print("No potion found in the chest.")
+
+    
 
 
     neste_rom = current_room.room_menu()
