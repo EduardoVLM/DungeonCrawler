@@ -61,11 +61,11 @@ def choose_character(character_choice):
 
 #---------------------enemies---------------------------#
 
-meggie = Enemy("Meggie", 5, 30, "<<AUAUAUAUAUAUAUAUAUAU>>", teeth)
-mor = Enemy("Mor", 10, 100, "<<Go buy rice now!>>", slipper)
-bestemor = Enemy("Bestemor", 20, 200, "<<I want to sleep, stop playing!>>", bible)
-stefan = Enemy("Stefan", 15, 150, "<<Go take care of Matheus!>>", cigareter)
-matheus = Enemy("Matheus", 35, 75, "<<EU NAO QUERO!!>>", rage)
+meggie = Enemy("Meggie", 5, 30, '"AUAUAUAUAUAUAUAUAUAU"', teeth)
+mor = Enemy("Mor", 10, 100, '"Go buy rice now!"', slipper)
+bestemor = Enemy("Bestemor", 20, 200, '"I want to sleep, stop playing!"', bible)
+stefan = Enemy("Stefan", 15, 150, '"Go take care of Matheus!"', cigareter)
+matheus = Enemy("Matheus", 35, 75, '"EU NAO QUERO!!"', rage)
 
 
 #---------------------rooms-----------------------------#
@@ -138,7 +138,7 @@ while True:
     current_room.room_name()
     current_room.describe_room()
     Enemy = current_room.room_monster_display()
-    if Enemy:
+    if Enemy and Enemy.is_alive():
         Enemy.catch_phrase()
         result = Start_battle(character, Enemy)
         score += result

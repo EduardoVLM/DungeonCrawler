@@ -15,7 +15,7 @@ class Room:
     def room_monster_display(self):
         if self.enemy == None:
             print("It is quiet here...")
-        else:
+        elif self.enemy.is_alive():
             print(f"OH NO! {self.enemy.name} is aproaching!")
             return self.enemy
         
