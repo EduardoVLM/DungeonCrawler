@@ -10,6 +10,7 @@ class character:
         self.strength = strength
         self.s_ability = s_ability
         self.inventory = {"Health Potion": 2}
+        self.buffed = 1.0
         
     def is_alive(self):
         return self.hp > 0
@@ -20,9 +21,14 @@ class character:
             self.hp = 0
 
     def attack_enemy(self, enemy):
+        if self.buffed > 1.0:
+            self.attack = int(self.attack * self.buffed)
+        else:
+            self.attack = self.attack
         damage = random.randint(1, self.attack) + self.weapon.damage
         enemy.take_damage(damage)
         print(f"{self.name} attacked {enemy.name} with {self.weapon.name} for {damage} damage!")
+        self.buffed = 1.0
 
     def health_bar(self):
         print(f"{self.name} has {self.hp} HP left")
@@ -53,11 +59,43 @@ class character:
         if self.name != "Emil":
             print("Youre not him")
             return
-        enemy.take_damage(40)
-        print(f"{self.name} used Flour Explosion on {enemy.name} for 40 damage and stunned him for 2 turns")
+        enemy.take_damage(50)
+        self.take_damage(20)
+        print(f"{self.name} used Flour Explosion on {enemy.name} for 50 damage!")
+        print(f"{self.name} took 20 damage from the explosion and has {self.hp} HP left!")
 
-    def smoke(self, enemy):
+    def røyk(self, enemy):
         if self.name != "Ibi":
             print("Youre not him")
             return
         enemy.stunned = 2
+        print(f"{self.name} used Smoke on {enemy.name} and stunned them for 2 turns!")
+
+    def insults(self, enemy):
+        if self.name != "Thea":
+            print("Youre not her")
+            return
+        enemy.weakened = 0.25
+        print(f"{self.name} insulted {enemy.name} and weakened their attacks!")
+
+    def stg_buff(self, enemy):
+        if self.name != "Ody":
+            print("Youre not him")
+            return
+        self.buffed = 2.0
+        print(f"{self.name} has buffed his strength!")
+
+    def nail_barrage(self, enemy):
+        if self.name != "Leah":
+            print("Youre not her")
+            return
+        enemy.take_damage(30)
+        print(f"{self.name} throws a barrage of sharp nails at {enemy.name} for 30 damage!")
+    
+    def at_barrage(self, enemy):
+        if self.name != "Ferdi":
+            print("Youre not him")
+            return
+        enemy.take_damage(60)
+        print(f"{self.name} shoots a barrage of artilery sheels at {enemy.name} for 60 damage!")
+        

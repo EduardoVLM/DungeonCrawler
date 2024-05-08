@@ -8,6 +8,7 @@ class Enemy:
         self.weapon = weapon
         self.attack = attack
         self.stunned = 0
+        self.weakened = 1.0
 
     def is_alive(self):
         return self.hp > 0
@@ -23,9 +24,9 @@ class Enemy:
                 self.stunned -= 1
             else:
                 if self.weapon is None:
-                    damage = random.randint(1, self.attack // 2)
+                    damage = random.randint(1, int(self.attack // 2 * self.weakened))
                 else:
-                    damage = random.randint(1, self.attack)
+                    damage = random.randint(1, int(self.attack * self.weakened) + self.weapon.damage)
                 enemy.take_damage(damage)
                 if self.weapon:
                     print(f"{self.name} attacked {enemy.name} with {self.weapon.name} for {damage} damage!")

@@ -11,7 +11,7 @@ from chest import Chest
 #---------------------weapons---------------------------#
 
 fists = Weapon("Fist", 10, 1)
-protein_f = Weapon("Protein flask", 10, 2)
+protein_f = Weapon("Protein flask", 12, 2)
 nail = Weapon("Nails", 12, 3)
 vape = Weapon("Vape", 15, 2)
 cigareter = Weapon("Cigg", 10, 2)
@@ -20,6 +20,7 @@ art = Weapon("AT kanon", 20, 10)
 teeth = Weapon("Teeth", 8, 1)
 slipper = Weapon("Slipper", 15, 5)
 bible = Weapon("Holy Bible", 18, 10)
+fish = Weapon("Fish", 10, 1)
 rage = Weapon("Rage", 18, 1)
 
 #-------------------potions-----------------------------#
@@ -34,6 +35,7 @@ edo_room_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 hall_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 kitchen_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 hell_chest = Chest([Health_potion, Hp_potion, Healing_juice])
+toalett_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 
 #-------------------characters--------------------------#
 
@@ -62,6 +64,7 @@ def choose_character(character_choice):
 #---------------------enemies---------------------------#
 
 meggie = Enemy("Meggie", 5, 30, '"AUAUAUAUAUAUAUAUAUAU"', teeth)
+fish = Enemy("Fish", 5, 20, '"GlubGlubGlubbGlub"', fish)
 mor = Enemy("Mor", 10, 100, '"Go buy rice now!"', slipper)
 bestemor = Enemy("Bestemor", 20, 200, '"I want to sleep, stop playing!"', bible)
 stefan = Enemy("Stefan", 15, 150, '"Go take care of Matheus!"', cigareter)
@@ -74,6 +77,7 @@ current_room = None
 
 edo_room = Room("Edo room", None, edo_room_chest, "It stinks here")
 hall = Room("Hall", meggie , hall_chest, "Meggie's realm")
+toalett = Room("Toalett", fish, toalett_chest, "Smells like fish")
 kitchen = Room("Kitchen", mor, kitchen_chest, "smells good")
 stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching")
 varanda = Room("Varanda", stefan, None, "It stinks cigaretes.")
@@ -83,7 +87,8 @@ hell = Room("Hell", None, hell_chest, "Welcome to the abyss of eternal torment!"
 #------------------connecting rooms---------------------#
 
 edo_room.connecting_rooms = [hall]
-hall.connecting_rooms = [stue, kitchen, edo_room, mamma_rom]
+hall.connecting_rooms = [stue, kitchen, edo_room, mamma_rom, toalett]
+toalett.connecting_rooms = [hall]
 kitchen.connecting_rooms = [hall]
 mamma_rom.connecting_rooms = [hall]
 stue.connecting_rooms = [hall, varanda]
@@ -136,6 +141,22 @@ def Start_battle(character, Enemy):
             elif character.s_ability == "Kleptomania":
                 print("Special Ability: Kleptomania")
                 character.kleptomania(Enemy)
+            elif character.s_ability == "Røyk":
+                print("Special Ability: Røyk")
+                character.røyk(Enemy)
+            elif character.s_ability == "Insults":
+                print("Special Ability: Insults")
+                character.insults(Enemy)
+            elif character.s_ability == "STG buff":
+                print("Special Ability: STG buff")
+                character.stg_buff(Enemy)
+            elif character.s_ability == "MF ult":
+                print("Special Ability: Nail Barrage")
+                character.nail_barrage(Enemy)
+            elif character.s_ability == "Sprenge shit":
+                print("Special Ability: Sprenge Shit")
+                character.at_barrage(Enemy)
+
 
 
         elif choice == "3":
@@ -198,6 +219,4 @@ while True:
 
     neste_rom = current_room.room_menu()
     current_room = current_room.connecting_rooms[int(neste_rom)]
-    
-
-   
+ 
