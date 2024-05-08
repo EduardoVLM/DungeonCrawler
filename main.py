@@ -39,13 +39,13 @@ toalett_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 
 #-------------------characters--------------------------#
 
-edo = character("Edo", 100, 10, fists, 5, 5, "Kleptomania")
-emil = character("Emil", 110, 10, baguette, 6, 6, "Flour explosion")
-ibi = character("Ibi", 110, 10, cigareter, 4, 5, "Røyk")
-thea = character("Thea", 110, 10, vape, 5, 7, "Insults")
-ody = character("Ody", 120, 10, protein_f, 6, 8, "STG buff")
-leah = character("Leah", 100, 50, nail, 5, 5, "MF ult")
-ferdinand = character("Ferdi", 110, 11, art, 6, 7, "Sprenge shit")
+edo = character("Edo", 100, 10, fists, 5, 5, "Kleptomania", 0.5)
+emil = character("Emil", 110, 10, baguette, 6, 6, "Flour explosion", 6)
+ibi = character("Ibi", 110, 10, cigareter, 4, 5, "Røyk", 6)
+thea = character("Thea", 110, 10, vape, 5, 7, "Insults", 6)
+ody = character("Ody", 120, 10, protein_f, 6, 8, "STG buff", 6)
+leah = character("Leah", 100, 50, nail, 5, 5, "MF ult", 6)
+ferdinand = character("Ferdi", 110, 11, art, 6, 7, "Sprenge shit", 6)
 
 character_choice = [edo, emil, ibi, thea, ody, leah, ferdinand]
 
@@ -63,12 +63,12 @@ def choose_character(character_choice):
 
 #---------------------enemies---------------------------#
 
-meggie = Enemy("Meggie", 5, 30, '"AUAUAUAUAUAUAUAUAUAU"', teeth)
-fish = Enemy("Fish", 5, 20, '"GlubGlubGlubbGlub"', fish)
-mor = Enemy("Mor", 10, 100, '"Go buy rice now!"', slipper)
-bestemor = Enemy("Bestemor", 20, 200, '"I want to sleep, stop playing!"', bible)
-stefan = Enemy("Stefan", 15, 150, '"Go take care of Matheus!"', cigareter)
-matheus = Enemy("Matheus", 35, 75, '"EU NAO QUERO!!"', rage)
+meggie = Enemy("Meggie", 5, 30, '"AUAUAUAUAUAUAUAUAUAU"', teeth, 7)
+fish = Enemy("Fish", 5, 20, '"GlubGlubGlubbGlub"', fish, 7)
+mor = Enemy("Mor", 10, 100, '"Go buy rice now!"', slipper, 7)
+bestemor = Enemy("Bestemor", 20, 200, '"I want to sleep, stop playing!"', bible, 7)
+stefan = Enemy("Stefan", 15, 150, '"Go take care of Matheus!"', cigareter, 7)
+matheus = Enemy("Matheus", 35, 75, '"EU NAO QUERO!!"', rage, 7)
 
 
 #---------------------rooms-----------------------------#
