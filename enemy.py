@@ -7,6 +7,7 @@ class Enemy:
         self.dialogue = dialogue
         self.weapon = weapon
         self.attack = attack
+        self.stunned = 0
 
     def is_alive(self):
         return self.hp > 0
@@ -17,9 +18,19 @@ class Enemy:
             self.hp = 0
 
     def attack_enemy(self, enemy):
-        damage = random.randint(1, self.attack)
-        enemy.take_damage(damage)
-        print(f"{self.name} attacked {enemy.name} with {self.weapon.name} for {damage} damage!")
+            if self.stunned > 0:
+                print(f"{self.name} is stunned and cannot attack!")
+                self.stunned -= 1
+            else:
+                if self.weapon is None:
+                    damage = random.randint(1, self.attack // 2)
+                else:
+                    damage = random.randint(1, self.attack)
+                enemy.take_damage(damage)
+                if self.weapon:
+                    print(f"{self.name} attacked {enemy.name} with {self.weapon.name} for {damage} damage!")
+                else:
+                    print(f"{self.name} attacked {enemy.name} for {damage} damage!")
 
     def health_bar(self):
         print(f"{self.name} has {self.hp} HP left")

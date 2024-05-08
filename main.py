@@ -17,10 +17,10 @@ vape = Weapon("Vape", 15, 2)
 cigareter = Weapon("Cigg", 10, 2)
 baguette = Weapon("Baguette", 15, 1)
 art = Weapon("AT kanon", 20, 10)
-teeth = Weapon("Teeth", 2, 1)
-slipper = Weapon("Slipper", 7, 5)
-bible = Weapon("Holy Bible", 10, 10)
-rage = Weapon("Rage", 10, 1)
+teeth = Weapon("Teeth", 8, 1)
+slipper = Weapon("Slipper", 15, 5)
+bible = Weapon("Holy Bible", 18, 10)
+rage = Weapon("Rage", 18, 1)
 
 #-------------------potions-----------------------------#
 
@@ -103,6 +103,15 @@ def start_game(character):
     
 start_game(character)
 
+#---------------------battle menu------------------------#
+
+def battle_menu():
+    print("1. Attack")
+    print("2. Use Special Ability")
+    print("3. Use Item")
+    choice = input("Choose an option: ")
+    return choice
+
 #--------------------battle system----------------------#
 
 def Start_battle(character, Enemy):
@@ -110,20 +119,42 @@ def Start_battle(character, Enemy):
     print("Battle Start!")
 
     while character.is_alive() and Enemy.is_alive():
-        input("Press ENTER to attack")
-        character.attack_enemy(Enemy)
+        choice = battle_menu()
+
+        if choice == "1":
+            character.attack_enemy(Enemy)
         Enemy.health_bar()
         if not Enemy.is_alive():
             print(f"you've defeated {Enemy.name}!")
             score = 10
             break
-        input("Press ENTER to resume")
-        Enemy.attack_enemy(character)
-        character.health_bar()
-        if not character.is_alive():
-            print("You have been defeated!")
-            score = -10
-            break
+
+        elif choice == "2":
+            if character.s_ability == "Flour explosion":
+                print("Special Ability: Flour Explosion")
+                character.flour_explosion(Enemy)
+            elif character.s_ability == "Kleptomania":
+                print("Special Ability: Kleptomania")
+                character.kleptomania(Enemy)
+
+
+        elif choice == "3":
+            print("Your inventory:")
+            for i, (item, quantity) in enumerate(character.inventory.items(), start=1):
+                print(f"{i}. {item}: {quantity}")
+            item_to_use = int(input("Choose an item to use: "))
+            item_name = list(character.inventory.keys())[item_to_use - 1]
+            character.use_item(item_name)
+
+
+        if Enemy.is_alive():
+            input("Press ENTER to resume")
+            Enemy.attack_enemy(character)
+            character.health_bar()
+            if not character.is_alive():
+                print("You have been defeated!")
+                score = -10
+                break
     
     print("Battle End!")
     return score
@@ -162,7 +193,7 @@ while True:
         else:
             print("No potion found in the chest.")
 
-    
+
 
 
     neste_rom = current_room.room_menu()
