@@ -35,6 +35,7 @@ edo_room_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 hall_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 kitchen_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 hell_chest = Chest([Health_potion, Hp_potion, Healing_juice])
+lager_rom_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 toalett_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 
 #-------------------characters--------------------------#
@@ -63,7 +64,7 @@ def choose_character(character_choice):
 
 #---------------------enemies---------------------------#
 
-meggie = Enemy("Meggie", 5, 30, '"AUAUAUAUAUAUAUAUAUAU"', teeth, 7)
+meggie = Enemy("Meggie", 8, 30, '"AUAUAUAUAUAUAUAUAUAU"', teeth, 7)
 fish = Enemy("Fish", 5, 20, '"GlubGlubGlubbGlub"', fish, 7)
 mor = Enemy("Mor", 10, 100, '"Go buy rice now!"', slipper, 7)
 bestemor = Enemy("Bestemor", 20, 200, '"I want to sleep, stop playing!"', bible, 7)
@@ -77,6 +78,7 @@ current_room = None
 
 edo_room = Room("Edo room", None, edo_room_chest, "It stinks here")
 hall = Room("Hall", meggie , hall_chest, "Meggie's realm")
+lager_rom = Room("Lager Rom", None, lager_rom_chest, "You feel like theres something hidden here")
 toalett = Room("Toalett", fish, toalett_chest, "Smells like fish")
 kitchen = Room("Kitchen", mor, kitchen_chest, "smells good")
 stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching")
@@ -88,6 +90,7 @@ hell = Room("Hell", None, hell_chest, "Welcome to the abyss of eternal torment!"
 
 edo_room.connecting_rooms = [hall]
 hall.connecting_rooms = [stue, kitchen, edo_room, mamma_rom, toalett]
+lager_rom.connecting_rooms = [hall]
 toalett.connecting_rooms = [hall]
 kitchen.connecting_rooms = [hall]
 mamma_rom.connecting_rooms = [hall]
