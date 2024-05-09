@@ -76,7 +76,7 @@ matheus = Enemy("Matheus", 35, 75, '"EU NAO QUERO!!"', rage, 7)
 
 current_room = None
 
-edo_room = Room("Edo room", None, edo_room_chest, "It stinks here")
+edo_room = Room("Edo room", None, edo_room_chest, "It stinks here", {"Explore the Wardrobe": Room.explore_wardrobe, "Explore under the bed": Room.explore_under_bed})
 hall = Room("Hall", meggie , hall_chest, "Meggie's realm")
 lager_rom = Room("Lager Rom", None, lager_rom_chest, "You feel like theres something hidden here")
 toalett = Room("Toalett", fish, toalett_chest, "Smells like fish")
@@ -89,7 +89,7 @@ hell = Room("Hell", None, hell_chest, "Welcome to the abyss of eternal torment!"
 #------------------connecting rooms---------------------#
 
 edo_room.connecting_rooms = [hall]
-hall.connecting_rooms = [stue, kitchen, edo_room, mamma_rom, toalett]
+hall.connecting_rooms = [stue, kitchen, edo_room, mamma_rom, toalett, lager_rom]
 lager_rom.connecting_rooms = [hall]
 toalett.connecting_rooms = [hall]
 kitchen.connecting_rooms = [hall]
@@ -195,6 +195,7 @@ while True:
     Enemy = current_room.room_monster_display()
     if Enemy and Enemy.is_alive():
         Enemy.catch_phrase()
+
         result = Start_battle(character, Enemy)
         score += result
         print(f"Score {score}")
@@ -207,19 +208,39 @@ while True:
             print("VICTORY! You have earned your peace!")
             break
 
-    if current_room.chest:
-        input("Press ENTER to open chest")
-        found_potion = current_room.chest.open()
+    actions = ["Explore room", "Open chest", "Move to another room"]
+    for i, actions in enumerate(actions, start=1):
+        print(f"{i}. {actions}")
+    choice = input("Choose an action: ")
+    while not choice.isdigit() or int(choice) < 1 or int(choice) > len(actions):
+        choice = input("Invalid choice! Choose again: ")
+
+    if choice == "1":
+        os.system("cls")
+        current_room.explore_room()
+    elif choice == "2":
+        found_potion = None
+        if current_room.chest:
+            print("Press ENTER to open chest")
+            input()
+            found_potion = current_room.chest.open()
 
         if found_potion is not None:
             found_potion.use_health_potion(character)
             print(f"You found a {found_potion.name}, you have now {character.hp} HP")
+            input("Press ENTER to continue")
         else:
-            print("No potion found in the chest.")
+            #print("No potion found in the chest.")
+            input("Press ENTER to continue")
+    elif choice == "3":
+        os.system("cls")
+        neste_rom = current_room.room_menu()
+        current_room = current_room.connecting_rooms[int(neste_rom)]
+    else:
+        print("Invalid choice! Choose again: ")
 
 
 
 
-    neste_rom = current_room.room_menu()
-    current_room = current_room.connecting_rooms[int(neste_rom)]
+
  

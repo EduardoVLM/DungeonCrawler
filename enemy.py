@@ -1,4 +1,5 @@
 import random
+import os
 
 class Enemy:
     def __init__(self, name, attack, hp, dialogue, weapon, accuracy):
@@ -20,6 +21,7 @@ class Enemy:
             self.hp = 0
 
     def attack_enemy(self, enemy):
+        os.system("cls")
         if random.randint(1, 10) == 1:
             print(f"{self.name}'s attack missed!")
             return
