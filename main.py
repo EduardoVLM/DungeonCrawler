@@ -76,13 +76,13 @@ matheus = Enemy("Matheus", 35, 75, '"EU NAO QUERO!!"', rage, 7)
 
 current_room = None
 
-edo_room = Room("Edo room", None, edo_room_chest, "It stinks here", {"Explore the Wardrobe": Room.explore_wardrobe, "Explore under the bed": Room.explore_under_bed})
-hall = Room("Hall", meggie , hall_chest, "Meggie's realm")
-lager_rom = Room("Lager Rom", None, lager_rom_chest, "You feel like theres something hidden here")
-toalett = Room("Toalett", fish, toalett_chest, "Smells like fish")
-kitchen = Room("Kitchen", mor, kitchen_chest, "smells good")
-stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching")
-varanda = Room("Varanda", stefan, None, "It stinks cigaretes.")
+edo_room = Room("Edo room", None, edo_room_chest, "It stinks here", {"Explore the Wardrobe": Room.explore_wardrobe, "Explore under the bed": lambda: Room.explore_under_bed(character)})
+hall = Room("Hall", meggie , hall_chest, "Meggie's realm", {"Explore the bookshelf": Room.explore_bookshelf, "Explore Meggies's bed": lambda: Room.explore_meggies_bed(character)})
+lager_rom = Room("Lager Rom", None, lager_rom_chest, "You feel like theres something hidden here", {"Explore the shoe rack": Room.explore_shoe_rack, "Explore the toy box": Room.explore_toy_box})
+toalett = Room("Toalett", fish, toalett_chest, "Smells like fish", {"Explore the toilet": lambda: Room.explore_toilett(character), "Explore the shower": lambda: Room.explore_shower(character)})
+kitchen = Room("Kitchen", mor, kitchen_chest, "smells good", {"Explore the refrigerator": Room.explore_refrigerator, "Eat the food bowl": lambda: Room.explore_food_bowl(character)})
+stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching", {"Look behind the TV": lambda: Room.explore_behind_tv(character), "Look under the couch": lambda: Room.explore_under_couch(character)})
+varanda = Room("Varanda", stefan, None, "It stinks cigaretes.", {"Peek outside the window": lambda: Room.explore_window(character)})
 mamma_rom = Room("Mor's room", matheus, None, "This was once a place of peace, but that was before HE arrived" )
 hell = Room("Hell", None, hell_chest, "Welcome to the abyss of eternal torment!")
 
@@ -184,12 +184,13 @@ def Start_battle(character, Enemy):
     return score
 
 #--------------------game loop--------------------------#
-total_enemies = 5 
+total_enemies = 6 
 enemies_killed = 0
 
 score = 0
 while True:
     os.system("cls")
+    print(f"Your Hp: {character.hp}")
     current_room.room_name()
     current_room.describe_room()
     Enemy = current_room.room_monster_display()
@@ -230,7 +231,6 @@ while True:
             print(f"You found a {found_potion.name}, you have now {character.hp} HP")
             input("Press ENTER to continue")
         else:
-            #print("No potion found in the chest.")
             input("Press ENTER to continue")
     elif choice == "3":
         os.system("cls")
@@ -238,9 +238,3 @@ while True:
         current_room = current_room.connecting_rooms[int(neste_rom)]
     else:
         print("Invalid choice! Choose again: ")
-
-
-
-
-
- 
