@@ -22,6 +22,7 @@ slipper = Weapon("Slipper", 15, 5)
 bible = Weapon("Holy Bible", 18, 10)
 fish = Weapon("Fish", 10, 1)
 rage = Weapon("Rage", 18, 1)
+soc = Weapon("ULTIMATE SWORD OF CHAOS", 100, 1000)
 
 #-------------------potions-----------------------------#
 
@@ -41,8 +42,8 @@ toalett_chest = Chest([Health_potion, Hp_potion, Healing_juice])
 #-------------------characters--------------------------#
 
 edo = character("Edo", 100, 10, fists, 5, 5, "Kleptomania", 0.5)
-emil = character("Emil", 110, 10, baguette, 6, 6, "Flour explosion", 6)
 ibi = character("Ibi", 110, 10, cigareter, 4, 5, "Røyk", 6)
+emil = character("Emil", 110, 10, baguette, 6, 6, "Flour explosion", 6)
 thea = character("Thea", 110, 10, vape, 5, 7, "Insults", 6)
 ody = character("Ody", 120, 10, protein_f, 6, 8, "STG buff", 6)
 leah = character("Leah", 100, 50, nail, 5, 5, "MF ult", 6)
@@ -78,7 +79,7 @@ current_room = None
 
 edo_room = Room("Edo room", None, edo_room_chest, "It stinks here", {"Explore the Wardrobe": Room.explore_wardrobe, "Explore under the bed": lambda: Room.explore_under_bed(character)})
 hall = Room("Hall", meggie , hall_chest, "Meggie's realm", {"Explore the bookshelf": Room.explore_bookshelf, "Explore Meggies's bed": lambda: Room.explore_meggies_bed(character)})
-lager_rom = Room("Lager Rom", None, lager_rom_chest, "You feel like theres something hidden here", {"Explore the shoe rack": Room.explore_shoe_rack, "Explore the toy box": Room.explore_toy_box})
+lager_rom = Room("Lager Rom", None, lager_rom_chest, "You feel like theres something hidden here", {"Explore the shoe rack": Room.explore_shoe_rack, "Explore the toy box":lambda: Room.explore_toy_box(character)})
 toalett = Room("Toalett", fish, toalett_chest, "Smells like fish", {"Explore the toilet": lambda: Room.explore_toilett(character), "Explore the shower": lambda: Room.explore_shower(character)})
 kitchen = Room("Kitchen", mor, kitchen_chest, "smells good", {"Explore the refrigerator": Room.explore_refrigerator, "Eat the food bowl": lambda: Room.explore_food_bowl(character)})
 stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching", {"Look behind the TV": lambda: Room.explore_behind_tv(character), "Look under the couch": lambda: Room.explore_under_couch(character)})
@@ -96,6 +97,7 @@ kitchen.connecting_rooms = [hall]
 mamma_rom.connecting_rooms = [hall]
 stue.connecting_rooms = [hall, varanda]
 varanda.connecting_rooms = [stue]
+hell.connecting_rooms = [lager_rom]
 current_room = edo_room
 
 #-------------character choice menu---------------------#
@@ -160,15 +162,17 @@ def Start_battle(character, Enemy):
                 print("Special Ability: Sprenge Shit")
                 character.at_barrage(Enemy)
 
-
-
         elif choice == "3":
-            print("Your inventory:")
-            for i, (item, quantity) in enumerate(character.inventory.items(), start=1):
-                print(f"{i}. {item}: {quantity}")
-            item_to_use = int(input("Choose an item to use: "))
-            item_name = list(character.inventory.keys())[item_to_use - 1]
-            character.use_item(item_name)
+            while True:
+                print("Your inventory:")
+                for i, (item, quantity) in enumerate(character.inventory.items(), start=1):
+                    print(f"{i}. {item}: {quantity}")
+                print("2. Go back")
+                item_to_use = int(input("Choose an item to use: "))
+                if item_to_use == 2:
+                    break
+                item_name = list(character.inventory.keys())[item_to_use - 1]
+                character.use_item(item_name)
 
 
         if Enemy.is_alive():

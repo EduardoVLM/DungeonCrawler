@@ -13,7 +13,7 @@ class character:
         self.inventory = {"Health Potion": 2}
         self.buffed = 1.0
         self.accuracy = 1.0
-        self.cooldown = 3
+        self.cooldown = 1
         
     def is_alive(self):
         return self.hp > 0
@@ -98,8 +98,8 @@ class character:
         if self.name != "Ibi":
             print("Youre not him")
             return
-        enemy.stunned = 2
-        print(f"{self.name} used Smoke on {enemy.name} and stunned them for 2 turns!")
+        enemy.stunned = 4
+        print(f"{self.name} used Smoke on {enemy.name} and stunned them for 4 turns!")
         self.cooldown = 3
 
     def insults(self, enemy):

@@ -1,5 +1,6 @@
 import os
 from character import character
+from weapon import Weapon
 
 class Room:
     def __init__(self, name, enemy, chest, description, explore_options={}, connecting_rooms = []):
@@ -84,8 +85,11 @@ class Room:
         print("There are way too many shoes here!")
         input("Press ENTER to continue")
 
-    def explore_toy_box():
-        print("Theres something deeper hidden here..")
+    def explore_toy_box(character):
+        print("There's something hidden here..")
+        soc = Weapon("ULTIMATE SWORD OF CHAOS", 80, 1000)
+        character.weapon = soc
+        print("You found the ULTIMATE SWORD OF CHAOS and equipped it!")
         input("Press ENTER to continue")
 
     def explore_toilett(character):
