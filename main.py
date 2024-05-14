@@ -16,7 +16,7 @@ nail = Weapon("Nails", 12, 3)
 vape = Weapon("Vape", 15, 2)
 cigareter = Weapon("Cigg", 10, 2)
 baguette = Weapon("Baguette", 15, 1)
-art = Weapon("AT kanon", 20, 10)
+art = Weapon("AT cannon", 20, 10)
 teeth = Weapon("Teeth", 8, 1)
 slipper = Weapon("Slipper", 15, 5)
 bible = Weapon("Holy Bible", 18, 10)
@@ -67,8 +67,8 @@ def choose_character(character_choice):
 
 meggie = Enemy("Meggie", 8, 30, '"AUAUAUAUAUAUAUAUAUAU"', teeth, 7)
 fish = Enemy("Fish", 5, 20, '"GlubGlubGlubbGlub"', fish, 7)
-mor = Enemy("Mor", 10, 100, '"Go buy rice now!"', slipper, 7)
-bestemor = Enemy("Bestemor", 20, 200, '"I want to sleep, stop playing!"', bible, 7)
+mor = Enemy("Mother", 10, 100, '"Go buy rice now!"', slipper, 7)
+bestemor = Enemy("Grandmother", 20, 200, '"I want to sleep, stop playing!"', bible, 7)
 stefan = Enemy("Stefan", 15, 150, '"Go take care of Matheus!"', cigareter, 7)
 matheus = Enemy("Matheus", 35, 75, '"EU NAO QUERO!!"', rage, 7)
 
@@ -77,15 +77,14 @@ matheus = Enemy("Matheus", 35, 75, '"EU NAO QUERO!!"', rage, 7)
 
 current_room = None
 
-edo_room = Room("Edo room", None, edo_room_chest, "It stinks here", {"Explore the Wardrobe": Room.explore_wardrobe, "Explore under the bed": lambda: Room.explore_under_bed(character)})
+edo_room = Room("Edo's room", None, edo_room_chest, "It stinks here", {"Explore the Wardrobe": Room.explore_wardrobe, "Explore under the bed": lambda: Room.explore_under_bed(character)})
 hall = Room("Hall", meggie , hall_chest, "Meggie's realm", {"Explore the bookshelf": Room.explore_bookshelf, "Explore Meggies's bed": lambda: Room.explore_meggies_bed(character)})
-lager_rom = Room("Lager Rom", None, lager_rom_chest, "You feel like theres something hidden here", {"Explore the shoe rack": Room.explore_shoe_rack, "Explore the toy box":lambda: Room.explore_toy_box(character)})
-toalett = Room("Toalett", fish, toalett_chest, "Smells like fish", {"Explore the toilet": lambda: Room.explore_toilett(character), "Explore the shower": lambda: Room.explore_shower(character)})
+lager_rom = Room("Storage Room", None, lager_rom_chest, "You feel like theres something hidden here", {"Explore the shoe rack": Room.explore_shoe_rack, "Explore the toy box":lambda: Room.explore_toy_box(character)})
+toalett = Room("Toilett", fish, toalett_chest, "Smells like fish", {"Explore the toilet": lambda: Room.explore_toilett(character), "Explore the shower": lambda: Room.explore_shower(character)})
 kitchen = Room("Kitchen", mor, kitchen_chest, "smells good", {"Explore the refrigerator": Room.explore_refrigerator, "Eat the food bowl": lambda: Room.explore_food_bowl(character)})
 stue = Room("Living Room", bestemor, None, "You feel a menacing aura aproaching", {"Look behind the TV": lambda: Room.explore_behind_tv(character), "Look under the couch": lambda: Room.explore_under_couch(character)})
 varanda = Room("Varanda", stefan, None, "It stinks cigaretes.", {"Peek outside the window": lambda: Room.explore_window(character)})
-mamma_rom = Room("Mor's room", matheus, None, "This was once a place of peace, but that was before HE arrived" )
-hell = Room("Hell", None, hell_chest, "Welcome to the abyss of eternal torment!")
+mamma_rom = Room("Mother's room", matheus, None, "This was once a place of peace, but that was before HE arrived" )
 
 #------------------connecting rooms---------------------#
 
@@ -97,7 +96,6 @@ kitchen.connecting_rooms = [hall]
 mamma_rom.connecting_rooms = [hall]
 stue.connecting_rooms = [hall, varanda]
 varanda.connecting_rooms = [stue]
-hell.connecting_rooms = [lager_rom]
 current_room = edo_room
 
 #-------------character choice menu---------------------#
@@ -147,7 +145,7 @@ def Start_battle(character, Enemy):
                 print("Special Ability: Kleptomania")
                 character.kleptomania(Enemy)
             elif character.s_ability == "Røyk":
-                print("Special Ability: Røyk")
+                print("Special Ability: Smoke")
                 character.røyk(Enemy)
             elif character.s_ability == "Insults":
                 print("Special Ability: Insults")
@@ -159,7 +157,7 @@ def Start_battle(character, Enemy):
                 print("Special Ability: Nail Barrage")
                 character.nail_barrage(Enemy)
             elif character.s_ability == "Sprenge shit":
-                print("Special Ability: Sprenge Shit")
+                print("Special Ability: Explode Shit")
                 character.at_barrage(Enemy)
 
         elif choice == "3":
