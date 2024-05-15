@@ -1,5 +1,6 @@
 #--------------------imports----------------------------#
 
+import mysql.connector
 import os
 from room import Room
 from enemy import Enemy
@@ -7,6 +8,15 @@ from weapon import Weapon
 from character import character
 from potion import Potion
 from chest import Chest
+
+#-------------------database connection-----------------#
+
+db_connection = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="Admin",
+    database="login_system"
+)
 
 #---------------------weapons---------------------------#
 
@@ -185,6 +195,18 @@ def Start_battle(character, Enemy):
     print("Battle End!")
     return score
 
+#-------------------update score-----------------------------#
+
+def update_score(player_name, score):
+    cursor = db_connection.cursor()
+
+    sql = "INSERT INTO scores (player_name, score) VALUES (%s, %s) ON DUPLICATE KEY UPDATE score = %s"
+    data = (player_name, score, score)
+
+    cursor.execute(sql, data)
+    db_connection.commit()
+
+    cursor.close()
 #--------------------game loop--------------------------#
 total_enemies = 6 
 enemies_killed = 0
@@ -201,6 +223,7 @@ while True:
 
         result = Start_battle(character, Enemy)
         score += result
+        update_score(character.name, score)
         print(f"Score {score}")
         if result > 0:
             enemies_killed += 1
@@ -240,3 +263,7 @@ while True:
         current_room = current_room.connecting_rooms[int(neste_rom)]
     else:
         print("Invalid choice! Choose again: ")
+
+#-------------------close database connection-----------------#
+
+db_connection.close()
