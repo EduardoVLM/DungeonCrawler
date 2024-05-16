@@ -13,4 +13,4 @@ Navne til Spillet er The binding of Edo.
 ![thebindingofedo](https://github.com/edo-o/DungeonCrawler/assets/144334218/d0039c1c-cbaf-414b-9b6a-292edc27e5e3)
 
 
-ps: Hvis det er din første gang å spille, jeg recommenderer å explore varanda og shower. 😉
+ps: Hvis det er din første playthrough, jeg recommenderer å explore varanda og shower. 😉
