@@ -1,4 +1,4 @@
-# DungeonCrawler
+# The Binding of Edo
 Dungeon crawler game for Årsoppgaven lagd med Python.
 
 Spillet er veldig simpelt og lett å spille. Mann trenger bare å kunne lese/skrive og en keyboard.
